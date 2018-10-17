@@ -1,5 +1,13 @@
-<form class="form" method="POST" action="">
-	{% csrf_token %}
-	{{form.as_p}}
-	<input type="submit" value="{{ btn_title }}"/>
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+
+	<form class="form" method="POST" action="">
+		{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" value="{{ btn_title }}"/>
+	</form>	
+
+{% endblock content %}
+
+
