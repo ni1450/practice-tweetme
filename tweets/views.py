@@ -60,3 +60,5 @@ def tweet_detail_view(request, pk=None):
 		"object": obj,
 	}
 	return render(request,"tweets/detail_view.html", context)
+
+
