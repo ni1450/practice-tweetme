@@ -51,6 +51,7 @@ class Tweet(models.Model):
 	user		= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
 	content		= models.CharField(max_length=140, validators=[validate_content])
 	liked		= models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked')
+	reply		= models.BooleanField(verbose_name='Is a reply?', default=False)
 	update		= models.DateTimeField(auto_now=True)
 	timestamp	= models.DateTimeField(auto_now_add=True)
 
@@ -64,6 +65,18 @@ class Tweet(models.Model):
 
 	class Meta:
 		ordering = ['-timestamp']
+
+	def get_parent(self):
+		the_parent = self
+		if self.parent:
+			the_parent = self.parent
+		return the_parent
+
+	def get_children(self):
+		parent = self.get_parent()
+		qs = Tweet.objects.filter(parent=parent)
+		qs_parent = Tweet.objects.filter(pk=parent.pk)
+		return (qs | qs_parent)
 
 	# def clean(self, *args, **kwargs):
 	# 	content = self.content
