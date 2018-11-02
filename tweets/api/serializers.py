@@ -26,7 +26,7 @@ class ParentTweetModelSerializer(serializers.ModelSerializer):
 	def get_did_like(self, obj):
 		try:
 			user = request.user
-			if user.is_authenticated:
+			if user.is_authenticated():
 				if user in obj.liked.all():
 					return True
 		except:
@@ -71,7 +71,7 @@ class TweetModelSerializer(serializers.ModelSerializer):
 		request = self.context.get("request")		
 		try:
 			user = request.user
-			if user.is_authenticated:
+			if user.is_authenticated():
 				if user in obj.liked.all():
 					return True
 		except:
